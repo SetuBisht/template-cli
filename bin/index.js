@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const { Command } = require("commander");
 const path = require("path");
 const Table = require("cli-table");
-
+const { generateVanillaWebProject } = require("./templates/index");
 const validProjectTypes = ["vanillaWeb", "fullStack"];
 const version = "1.0.0";
 const features = [
@@ -68,49 +68,6 @@ async function generateProject(projectType, name) {
   }
 
   console.log(`${projectType} project generated successfully!`);
-}
-
-async function generateVanillaWebProject(projectDir, name) {
-  const indexHTMLContent = `<!DOCTYPE html>
-            <html lang="en">
-                <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${name}</title>
-                <link rel="stylesheet" href="style.css">
-                </head>
-                <body>
-                <h1>Hello, ${name}!</h1>
-                <script src="script.js"></script>
-                </body>
-                </html>`;
-
-  const styleCSSContent = `/* Reset styles */
-            html, body, h1 {
-            margin: 0;
-            padding: 0;
-            }
-
-            /* Global styles */
-            body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            line-height: 1.6;
-            }
-
-
-  const scriptJSContent = `; // Add your JavaScript code here`;
-
-  // Create files inside the directory with boilerplate content
-  await Promise.all([
-    fs.writeFile(path.join(projectDir, "index.html"), indexHTMLContent),
-    fs.writeFile(path.join(projectDir, "style.css"), styleCSSContent),
-    fs.writeFile(path.join(projectDir, "script.js"), scriptJSContent),
-    fs.mkdir(path.join(projectDir, "assets")),
-  ]);
-
-  console.log("Vanilla web project generated successfully!");
 }
 
 function displayFeatures() {
