@@ -43,4 +43,13 @@ async function generateVanillaWebProject(projectDir, name) {
 
   console.log("Vanilla web project generated successfully!");
 }
-module.exports = { generateVanillaWebProject };
+async function generateReact(projectDir, name, dependencies) {}
+async function generateNode(projectDir, name, dependencies) {}
+async function generateNext(projectDir, name, dependencies) {}
+
+module.exports = {
+  generateVanillaWebProject,
+  generateReact,
+  generateNode,
+  generateNext,
+};
