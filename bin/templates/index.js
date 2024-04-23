@@ -28,10 +28,9 @@ async function generateVanillaWebProject(projectDir, name) {
             background-color: #f0f0f0;
             color: #333;
             line-height: 1.6;
-            }
+            }`;
 
-
-  const scriptJSContent = ``; // Add your JavaScript code here`;
+  const scriptJSContent = ``;
 
   // Create files inside the directory with boilerplate content
   await Promise.all([
