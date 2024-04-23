@@ -2,18 +2,33 @@
 const fs = require("fs-extra");
 const { Command } = require("commander");
 const path = require("path");
+const Table = require("cli-table");
 
 const validProjectTypes = ["vanillaWeb", "fullStack"];
 const version = "1.0.0";
-const features = ["vanillaWeb", "fullStack", "Feature 3"];
+const features = [
+  { name: "vanillaWeb", description: "Vanilla Web project" },
+  {
+    name: "fullStack-node-react",
+    description: "Full Stack project with Node.js and React",
+  },
+  {
+    name: "fullStack-node-next",
+    description: "Full Stack project with Node.js and Next.js",
+  },
+];
 
 const program = new Command();
 
 program
   .version("1.0.0")
   .description("CLI tool for generating boilerplate code")
-  .arguments("<command> [projectType] [name]")
+  .arguments("[command] [projectType] [name]")
   .action(async (command, projectType, name) => {
+    if (!command) {
+      displayWelcomeMessage();
+      return;
+    }
     try {
       switch (command) {
         case "make":
@@ -28,10 +43,7 @@ program
           await generateProject(projectType, name);
           break;
         case "features":
-          console.log("Supported features:");
-          features.forEach((feature, index) =>
-            console.log(`${index + 1}. ${feature}`)
-          );
+          displayFeatures();
           break;
         default:
           console.error(`Invalid command. Supported commands: make, features`);
@@ -57,6 +69,7 @@ async function generateProject(projectType, name) {
 
   console.log(`${projectType} project generated successfully!`);
 }
+
 async function generateVanillaWebProject(projectDir, name) {
   const indexHTMLContent = `<!DOCTYPE html>
             <html lang="en">
@@ -98,6 +111,25 @@ async function generateVanillaWebProject(projectDir, name) {
   ]);
 
   console.log("Vanilla web project generated successfully!");
+}
+
+function displayFeatures() {
+  const table = new Table({
+    head: ["#", "Feature", "Description"],
+    colWidths: [5, 20, 50],
+  });
+
+  features.forEach((feature, index) => {
+    table.push([index + 1, feature.name, feature.description]);
+  });
+
+  console.log(table.toString());
+}
+
+function displayWelcomeMessage() {
+  console.log(`Welcome to template-cli.js!`);
+  console.log(`Here are the features:`);
+  displayFeatures();
 }
 
 program.parse(process.argv);
