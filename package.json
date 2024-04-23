@@ -1,0 +1,26 @@
+{
+  "name": "template-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/index.js",
+  "bin": {
+    "template-cli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SetuBisht/template-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SetuBisht/template-cli/issues"
+  },
+  "homepage": "https://github.com/SetuBisht/template-cli#readme",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0"
+  }
+}
