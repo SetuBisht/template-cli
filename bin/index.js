@@ -7,14 +7,36 @@ const { generateVanillaWebProject } = require("./templates/index");
 const validProjectTypes = ["vanillaWeb", "fullStack"];
 const version = "1.0.0";
 const features = [
-  { name: "vanillaWeb", description: "Vanilla Web project" },
+  {
+    name: "vanillaWeb",
+    description: "Vanilla Web project",
+    example: "template-cli.js make vanillaWeb myVanillaProject",
+  },
   {
     name: "fullStack-node-react",
     description: "Full Stack project with Node.js and React",
+    example:
+      "template-cli.js make fullStack-node-react myFullStackReactProject",
   },
   {
     name: "fullStack-node-next",
     description: "Full Stack project with Node.js and Next.js",
+    example: "template-cli.js make fullStack-node-next myFullStackNextProject",
+  },
+  {
+    name: "react",
+    description: "Generate a React project",
+    example: "template-cli.js make react myReactProject",
+  },
+  {
+    name: "node",
+    description: "Generate a Node.js project",
+    example: "template-cli.js make node myNodeProject",
+  },
+  {
+    name: "next",
+    description: "Generate a Next.js project",
+    example: "template-cli.js make next myNextProject",
   },
 ];
 
@@ -45,6 +67,9 @@ program
         case "features":
           displayFeatures();
           break;
+        case "help":
+          displayFeatures();
+          break;
         default:
           console.error(`Invalid command. Supported commands: make, features`);
       }
@@ -72,12 +97,15 @@ async function generateProject(projectType, name) {
 
 function displayFeatures() {
   const table = new Table({
-    head: ["#", "Feature", "Description"],
-    colWidths: [5, 20, 50],
+    head: ["#", "Command", "Description", "Example"],
+    colWidths: [5, 20, 50, 50], // Adjust colWidths as needed
   });
 
   features.forEach((feature, index) => {
-    table.push([index + 1, feature.name, feature.description]);
+    // Example data for the new column (assuming it's stored in the 'example' property of each feature object)
+    const example = feature.example || "-"; // If 'example' is not provided, use a dash (-)
+
+    table.push([index + 1, feature.name, feature.description, example]);
   });
 
   console.log(table.toString());
