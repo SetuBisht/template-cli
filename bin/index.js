@@ -3,8 +3,11 @@ const fs = require("fs-extra");
 const { Command } = require("commander");
 const path = require("path");
 const Table = require("cli-table");
-const { generateVanillaWebProject } = require("./templates/index");
-const validProjectTypes = ["vanillaWeb", "fullStack"];
+const {
+  generateVanillaWebProject,
+  generateNode,
+} = require("./templates/index");
+const validProjectTypes = ["vanillaWeb", "fullStack", "node"];
 
 const version = "1.0.0";
 
@@ -94,7 +97,9 @@ async function generateProject(projectType, name, dependencies) {
   if (projectType === "vanillaWeb") {
     await generateVanillaWebProject(projectDir, name);
   }
-
+  if (projectType === "node") {
+    await generateNode(projectDir, name, dependencies);
+  }
   console.log(`${projectType} project generated successfully!`);
 }
 
@@ -106,7 +111,6 @@ function displayFeatures() {
 
   features.forEach((feature, index) => {
     const example = feature.example || "-";
-
     table.push([index + 1, feature.name, feature.description, example]);
   });
 

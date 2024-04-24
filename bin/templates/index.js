@@ -1,5 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
+const { exec } = require("child_process");
 
 async function generateVanillaWebProject(projectDir, name) {
   const indexHTMLContent = `<!DOCTYPE html>
@@ -32,7 +33,6 @@ async function generateVanillaWebProject(projectDir, name) {
 
   const scriptJSContent = ``;
 
-  // Create files inside the directory with boilerplate content
   await Promise.all([
     fs.writeFile(path.join(projectDir, "index.html"), indexHTMLContent),
     fs.writeFile(path.join(projectDir, "style.css"), styleCSSContent),
@@ -43,7 +43,81 @@ async function generateVanillaWebProject(projectDir, name) {
   console.log("Vanilla web project generated successfully!");
 }
 async function generateReact(projectDir, name, dependencies) {}
-async function generateNode(projectDir, name, dependencies) {}
+
+async function generateNode(projectDir, name, dependencies) {
+  try {
+    // Create directory for the project
+    let customDependencies = ["express", "nodemon", "jsonwebtoken"];
+
+    // Generate package.json file
+    const packageJsonContent = {
+      name: name,
+      version: "1.0.0",
+      description: "",
+      main: "index.js",
+      scripts: {
+        start: "node index.js",
+      },
+      dependencies: {},
+      devDependencies: {},
+    };
+    await fs.writeFile(
+      path.join(projectDir, "package.json"),
+      JSON.stringify(packageJsonContent, null, 2)
+    );
+
+    // Generate index.js file
+    const indexJsContent = `const express = require('express');
+
+                            const app = express();
+                            const port = 3000;
+
+                          // Define routes
+                          app.get('/', (req, res) => {
+                            res.send('Hello, world!');
+                          });
+
+                            // Start the server
+                            app.listen(port, () => {
+                            console.log('Server is listening port');
+                            });`;
+
+    await fs.writeFile(path.join(projectDir, "index.js"), indexJsContent);
+    await Promise.all([
+      fs.mkdir(path.join(projectDir, "auth")),
+      fs.mkdir(path.join(projectDir, "middleware")),
+      fs.mkdir(path.join(projectDir, "schema")),
+      fs.mkdir(path.join(projectDir, "routes")),
+      fs.mkdir(path.join(projectDir, "Db")),
+      fs.mkdir(path.join(projectDir, "utility")),
+    ]);
+    // Install dependencies
+    if (customDependencies && customDependencies.length > 0) {
+      console.log("Installing dependencies...");
+      await installDependencies(projectDir, customDependencies);
+    }
+
+    console.log("Node.js project generated successfully!");
+  } catch (error) {
+    console.error("Error generating Node.js project:", error);
+  }
+}
+
+async function installDependencies(projectDir, dependencies) {
+  return new Promise((resolve, reject) => {
+    const command = `npm install ${dependencies.join(" ")}`;
+    exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Failed to install dependencies: ${error.message}`);
+        reject(error);
+      } else {
+        console.log(`Dependencies installed: ${dependencies.join(", ")}`);
+        resolve();
+      }
+    });
+  });
+}
+
 async function generateNext(projectDir, name, dependencies) {}
 
 module.exports = {
