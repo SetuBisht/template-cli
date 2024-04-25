@@ -3,6 +3,7 @@ const fs = require("fs-extra");
 const { Command } = require("commander");
 const path = require("path");
 const Table = require("cli-table");
+const boxen = require("boxen");
 const {
   generateVanillaWebProject,
   generateNode,
@@ -126,7 +127,7 @@ function displayFeatures() {
 }
 
 function displayWelcomeMessage() {
-  console.log(`Welcome to template-cli.js!`);
+  console.log(boxen("Welcome to template-cli.js!", { padding: 1 }));
   console.log(`Here are the features:`);
   displayFeatures();
 }
