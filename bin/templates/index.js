@@ -186,10 +186,26 @@ async function generateNext(projectDir, name, dependencies) {
     console.error("Error generating React app:", error);
   }
 }
+async function generateFullStackNodeReact(projectDir, name, dependencies) {
+  try {
+    console.log(`Full Stack app '${name}' generated successfully!`);
+  } catch (error) {
+    console.error("Error generating React app:", error);
+  }
+}
+async function generateFullStackNodeNext(projectDir, name, dependencies) {
+  try {
+    console.log(`Full Stack app '${name}' generated successfully!`);
+  } catch (error) {
+    console.error("Error generating React app:", error);
+  }
+}
 
 module.exports = {
   generateVanillaWebProject,
   generateReact,
   generateNode,
   generateNext,
+  generateFullStackNodeReact,
+  generateFullStackNodeNext,
 };

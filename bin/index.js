@@ -3,12 +3,13 @@ const fs = require("fs-extra");
 const { Command } = require("commander");
 const path = require("path");
 const Table = require("cli-table");
-const boxen = require("boxen");
 const {
   generateVanillaWebProject,
   generateNode,
   generateReact,
   generateNext,
+  generateFullStackNodeReact,
+  generateFullStackNodeNext,
 } = require("./templates/index");
 const validProjectTypes = ["vanillaWeb", "fullStack", "node", "react", "next"];
 
@@ -43,7 +44,7 @@ const features = [
   {
     name: "next",
     description: "Generate a Next.js project",
-    example: "template-cli.js make next myNextProject",
+    example: "template-cli.js make next <name> <dependencies>",
   },
 ];
 
@@ -109,6 +110,12 @@ async function generateProject(projectType, name, dependencies) {
   if (projectType === "next") {
     await generateNext(projectDir, name, dependencies);
   }
+  if (projectType === "fullStack-node-next") {
+    await generateFullStackNodeNext(projectDir, name, dependencies);
+  }
+  if (projectType === "fullStack-node-react") {
+    await generateFullStackNodeReact(projectDir, name, dependencies);
+  }
   console.log(`${projectType} project generated successfully!`);
 }
 
@@ -122,12 +129,11 @@ function displayFeatures() {
     const example = feature.example || "-";
     table.push([index + 1, feature.name, feature.description, example]);
   });
-
   console.log(table.toString());
 }
 
 function displayWelcomeMessage() {
-  console.log(boxen("Welcome to template-cli.js!", { padding: 1 }));
+  console.log("Welcome to template-cli.js!");
   console.log(`Here are the features:`);
   displayFeatures();
 }

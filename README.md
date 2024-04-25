@@ -10,14 +10,14 @@ To install Template CLI, you can use npm. Make sure you have Node.js installed o
 npm install -g template-cli
 ```
 
-## Usage
+# Usage
 
 Template CLI provides several commands for generating different types of projects.
 
-#Command Syntax
+# Command Syntax
 
 ```bash
-template-cli <command> [options]
+template-cli <command> [Name]
 ```
 
 # Commands
@@ -47,14 +47,3 @@ List all available features
 ```bash
 template-cli features
 ```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
