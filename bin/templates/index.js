@@ -188,6 +188,25 @@ async function generateNext(projectDir, name, dependencies) {
 }
 async function generateFullStackNodeReact(projectDir, name, dependencies) {
   try {
+    // Create frontend and backend directories
+    const frontendDir = path.join(projectDir, "frontend");
+    const backendDir = path.join(projectDir, "backend");
+    await Promise.all([fs.mkdir(frontendDir), fs.mkdir(backendDir)]);
+    // Initialize React in the frontend directory
+    process.chdir(frontendDir);
+    console.log(`Initializing React app in '${frontendDir}'...`);
+    await execShellCommand("npx create-react-app .");
+    let FrontDependencies = ["axios", "react-redux"];
+    if (FrontDependencies.length > 0) {
+      console.log(
+        `Installing additional dependencies: ${FrontDependencies.join(", ")}`
+      );
+      const newCommand = `npm install --save ${FrontDependencies.join(" ")}`;
+      await execShellCommand(newCommand);
+    }
+    // Initialize Node.js in the backend directory
+    console.log(`Initializing Node.js app in '${backendDir}'...`);
+    await generateNode(backendDir, name);
     console.log(`Full Stack app '${name}' generated successfully!`);
   } catch (error) {
     console.error("Error generating React app:", error);
