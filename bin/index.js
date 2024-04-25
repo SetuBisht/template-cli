@@ -6,8 +6,10 @@ const Table = require("cli-table");
 const {
   generateVanillaWebProject,
   generateNode,
+  generateReact,
+  generateNext,
 } = require("./templates/index");
-const validProjectTypes = ["vanillaWeb", "fullStack", "node"];
+const validProjectTypes = ["vanillaWeb", "fullStack", "node", "react", "next"];
 
 const version = "1.0.0";
 
@@ -99,6 +101,12 @@ async function generateProject(projectType, name, dependencies) {
   }
   if (projectType === "node") {
     await generateNode(projectDir, name, dependencies);
+  }
+  if (projectType === "react") {
+    await generateReact(projectDir, name, dependencies);
+  }
+  if (projectType === "next") {
+    await generateNext(projectDir, name, dependencies);
   }
   console.log(`${projectType} project generated successfully!`);
 }

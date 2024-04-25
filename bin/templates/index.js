@@ -2,6 +2,32 @@ const fs = require("fs-extra");
 const path = require("path");
 const { exec } = require("child_process");
 
+async function installDependencies(projectDir, dependencies) {
+  return new Promise((resolve, reject) => {
+    const command = `npm install ${dependencies.join(" ")}`;
+    exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Failed to install dependencies: ${error.message}`);
+        reject(error);
+      } else {
+        console.log(`Dependencies installed: ${dependencies.join(", ")}`);
+        resolve();
+      }
+    });
+  });
+}
+function execShellCommand(command) {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(stdout ? stdout : stderr);
+    });
+  });
+}
+
 async function generateVanillaWebProject(projectDir, name) {
   const indexHTMLContent = `<!DOCTYPE html>
             <html lang="en">
@@ -42,7 +68,32 @@ async function generateVanillaWebProject(projectDir, name) {
 
   console.log("Vanilla web project generated successfully!");
 }
-async function generateReact(projectDir, name, dependencies) {}
+async function generateReact(projectDir, name, dependencies) {
+  try {
+    let customDependencies = ["axios", "react-redux"];
+    console.log(`Creating React app '${name}'...`);
+
+    // Create the React app using create-react-app
+    const command = `npx create-react-app ${name}`;
+    await execShellCommand(command);
+
+    // Change directory to the newly created React app
+    process.chdir(name);
+
+    // Install additional dependencies
+    if (customDependencies.length > 0) {
+      console.log(
+        `Installing additional dependencies: ${customDependencies.join(", ")}`
+      );
+      const newCommand = `npm install --save ${customDependencies.join(" ")}`;
+      await execShellCommand(newCommand);
+    }
+
+    console.log(`React app '${name}' generated successfully!`);
+  } catch (error) {
+    console.error("Error generating React app:", error);
+  }
+}
 
 async function generateNode(projectDir, name, dependencies) {
   try {
@@ -103,22 +154,38 @@ async function generateNode(projectDir, name, dependencies) {
   }
 }
 
-async function installDependencies(projectDir, dependencies) {
-  return new Promise((resolve, reject) => {
-    const command = `npm install ${dependencies.join(" ")}`;
-    exec(command, { cwd: projectDir }, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Failed to install dependencies: ${error.message}`);
-        reject(error);
-      } else {
-        console.log(`Dependencies installed: ${dependencies.join(", ")}`);
-        resolve();
-      }
-    });
-  });
-}
+async function generateNext(projectDir, name, dependencies) {
+  try {
+    let customDependencies = ["axios", "react-redux"];
+    console.log(`Creating next app '${name}'...`);
 
-async function generateNext(projectDir, name, dependencies) {}
+    // Create the React app using create-react-app
+    const command = `npx create-next-app ${name}`;
+    await execShellCommand(command);
+
+    // Change directory to the newly created React app
+    process.chdir(name);
+
+    // Install additional dependencies
+    if (customDependencies.length > 0) {
+      console.log(
+        `Installing additional dependencies: ${customDependencies.join(", ")}`
+      );
+      // Install additional dependencies
+      if (customDependencies.length > 0) {
+        console.log(
+          `Installing additional dependencies: ${customDependencies.join(", ")}`
+        );
+        const newCommand = `npm install --save ${customDependencies.join(" ")}`;
+        await execShellCommand(newCommand);
+      }
+    }
+
+    console.log(`React app '${name}' generated successfully!`);
+  } catch (error) {
+    console.error("Error generating React app:", error);
+  }
+}
 
 module.exports = {
   generateVanillaWebProject,
