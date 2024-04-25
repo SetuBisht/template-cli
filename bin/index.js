@@ -114,7 +114,7 @@ async function generateProject(projectType, name, dependencies) {
 function displayFeatures() {
   const table = new Table({
     head: ["#", "Command", "Description", "Example"],
-    colWidths: [5, 20, 50, 50],
+    colWidths: [3, 22, 45, 50],
   });
 
   features.forEach((feature, index) => {
