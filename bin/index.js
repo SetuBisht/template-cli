@@ -24,17 +24,17 @@ const features = [
   {
     name: "fullStack-node-react",
     description: "Full Stack project with Node.js and React",
-    example: "template-cli.js make fullStack-node-react <name> <dependencies>",
+    example: "template-cli.js make fullStack-node-react <name>",
   },
   {
     name: "fullStack-node-next",
     description: "Full Stack project with Node.js and Next.js",
-    example: "template-cli.js make fullStack-node-next <name> <dependencies>",
+    example: "template-cli.js make fullStack-node-next <name>",
   },
   {
     name: "react",
     description: "Generate a React project",
-    example: "template-cli.js make react <name> <dependencies>",
+    example: "template-cli.js make react <name>",
   },
   {
     name: "node",

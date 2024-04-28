@@ -36,10 +36,16 @@ Generate a Vanilla Web project
 template-cli make vanillaWeb myProject
 ```
 
+Generate a React project
+
+```bash
+template-cli make react myReactProject
+```
+
 Generate a Full Stack project with Node.js and React
 
 ```bash
-template-cli make fullStack-node-react myFullStackReactProject redux react-router
+template-cli make fullStack-node-react myFullStackReactProject
 ```
 
 List all available features
